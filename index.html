@@ -31,7 +31,35 @@
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-        }
+        }/* Start Button */
+#startBtn {
+    margin-top: 30px;
+    padding: 18px 50px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 5px solid #fff;
+    border-radius: 15px;
+    cursor: pointer;
+    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 0 #4a3580, 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.15s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#startBtn:hover {
+    background: linear-gradient(135deg, #7c91f5 0%, #8b5fc4 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 11px 0 #4a3580, 0 13px 35px rgba(0, 0, 0, 0.6);
+}
+
+#startBtn:active {
+    transform: translateY(5px);
+    box-shadow: 0 3px 0 #4a3580, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
 
         /* Canvas Styling */
         #gameCanvas {
@@ -611,8 +639,45 @@
         updateBestScoreDisplay();
 
         // Start game loop
-        gameLoop();
+        gameLoop();// Get button elements
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
+
+// Start button click event
+startBtn.addEventListener('click', startGame);
+
+// Restart button click event
+restartBtn.addEventListener('click', resetGame);
+
+// Start game function
+function startGame() {
+    gameState = 'playing';
+    startScreen.classList.add('hidden');
+    bird.velocity = CONFIG.jumpStrength;
+    playSound(jumpSound);
+}
+
+// Reset game function
+function resetGame() {
+    // Reset bird
+    bird.x = 80;
+    bird.y = canvas.height / 2;
+    bird.velocity = 0;
+    bird.rotation = 0;
+    
+    // Reset game variables
+    pipes = [];
+    score = 0;
+    frameCount = 0;
+    gameState = 'start';
+    
+    // Reset UI
+    scoreDisplay.textContent = '0';
+    gameOverScreen.classList.add('hidden');
+    startScreen.classList.remove('hidden');
+}
     </script>
 </body>
 
 </html>
+
